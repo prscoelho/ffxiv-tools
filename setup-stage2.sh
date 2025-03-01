@@ -88,21 +88,3 @@ else
     echo "$ACT_LOCATION" > "$WINEPREFIX/.ACT_Location"
 fi
 
-echo "Making sure wine isn't running anything"
-wine64 wineboot -s &>/dev/null
-
-echo 'Checking to see if wine binaries need their capabilities set'
-
-if [[ "$(getcap "$(command -v wine)")" == "" ]]; then
-    warn 'Setting network capture capabilities for ACT on your wine executables'
-    warn 'This process must be run as root, so you will be prompted for your password'
-    warn 'The commands to be run are as follows:'
-    echo
-    warn 'sudo setcap cap_net_raw,cap_net_admin,cap_sys_ptrace=eip "$(command -v wine)"'
-    warn 'sudo setcap cap_net_raw,cap_net_admin,cap_sys_ptrace=eip "$(command -v wine64)"'
-    warn 'sudo setcap cap_net_raw,cap_net_admin,cap_sys_ptrace=eip "$(command -v wineserver)"'
-    PROMPT_CONTINUE
-    sudo setcap cap_net_raw,cap_net_admin,cap_sys_ptrace=eip "$(command -v wine)"
-    sudo setcap cap_net_raw,cap_net_admin,cap_sys_ptrace=eip "$(command -v wine64)"
-    sudo setcap cap_net_raw,cap_net_admin,cap_sys_ptrace=eip "$(command -v wineserver)"
-fi
