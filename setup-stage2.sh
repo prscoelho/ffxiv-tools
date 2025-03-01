@@ -88,3 +88,5 @@ else
     echo "$ACT_LOCATION" > "$WINEPREFIX/.ACT_Location"
 fi
 
+echo 'Installing dotnet480'
+winetricks dotnet48
